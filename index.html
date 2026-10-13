@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Veloqra helps you save videos you own or have permission to download.">
+<title>Veloqra — Video Downloader</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#07111f;color:#f5f8ff;font-family:Arial,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:22px 7%;border-bottom:1px solid #20314a}
+.logo{font-size:25px;font-weight:bold;color:#58b8ff}
+select,input,button{font:inherit;border-radius:10px;padding:13px}
+select{background:#10213a;color:white;border:1px solid #30445f}
+main{max-width:850px;margin:75px auto;padding:20px;text-align:center}
+h1{font-size:clamp(34px,6vw,58px);margin-bottom:15px}
+h1 span{color:#46b6ff}
+p{color:#b7c7dd;line-height:1.7}
+.form{display:flex;gap:10px;background:#11213a;padding:12px;border:1px solid #29415f;border-radius:16px;margin:30px 0}
+input{flex:1;min-width:0;background:#07111f;color:white;border:1px solid #30445f}
+button{background:#087df5;color:white;border:0;font-weight:bold;cursor:pointer}
+button:hover{background:#2493ff}
+.notice{font-size:13px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:55px;text-align:left}
+.card{padding:20px;border:1px solid #263a55;border-radius:14px;background:#0c1a2d}
+.card h3{margin-top:0}
+footer{text-align:center;border-top:1px solid #20314a;padding:25px;color:#94a9c5}
+@media(max-width:600px){header{padding:18px;gap:10px}main{margin:35px auto}.form{flex-direction:column}.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">▶ Veloqra</div>
+  <select id="language" aria-label="Choose language">
+    <option value="en">English</option>
+    <option value="bn">বাংলা (Bengali)</option>
+    <option value="hi">हिन्दी (Hindi)</option>
+    <option value="es">Español</option>
+    <option value="fr">Français</option>
+  </select>
+</header>
+<main>
+  <h1 id="heading">Download Videos <span>Simply.</span></h1>
+  <p id="subtitle">Paste a direct video link to check whether it can be downloaded.</p>
+  <form class="form" id="downloadForm">
+    <input id="videoUrl" type="url" placeholder="Paste a direct video URL..." required>
+    <button id="downloadButton" type="submit">Check Link</button>
+  </form>
+  <p id="message" role="status">Only download videos you own or have permission to save.</p>
+  <div class="cards">
+    <section class="card"><h3 id="feature1">Simple & Fast</h3><p id="desc1">An easy-to-use interface on any screen.</p></section>
+    <section class="card"><h3 id="feature2">Your Device</h3><p id="desc2">Save supported video files to your device.</p></section>
+    <section class="card"><h3 id="feature3">Respect Creators</h3><p id="desc3">Use content you own or are allowed to download.</p></section>
+  </div>
+</main>
+<footer>© 2026 Veloqra · <span id="footerText">Video tools made simple</span></footer>
+<script>
+const translations={
+en:{heading:'Download Videos <span>Simply.</span>',subtitle:'Paste a direct video link to check whether it can be downloaded.',placeholder:'Paste a direct video URL...',button:'Check Link',message:'Only download videos you own or have permission to save.',f1:'Simple & Fast',d1:'An easy-to-use interface on any screen.',f2:'Your Device',d2:'Save supported video files to your device.',f3:'Respect Creators',d3:'Use content you own or are allowed to download.',footer:'Video tools made simple'},
+bn:{heading:'সহজেই <span>ভিডিও সেভ করুন।</span>',subtitle:'ডাউনলোড করা যায় কি না দেখতে সরাসরি ভিডিওর লিংক দিন।',placeholder:'ভিডিওর সরাসরি লিংক পেস্ট করুন...',button:'লিংক পরীক্ষা',message:'শুধু নিজের বা অনুমতি থাকা ভিডিও ডাউনলোড করুন।',f1:'সহজ ও দ্রুত',d1:'সব স্ক্রিনে সহজে ব্যবহার করুন।',f2:'আপনার ডিভাইস',d2:'সমর্থিত ভিডিও ফাইল সেভ করুন।',f3:'নির্মাতাকে সম্মান করুন',d3:'নিজের বা অনুমোদিত কনটেন্ট ব্যবহার করুন।',footer:'সহজ ভিডিও টুলস'},
+hi:{heading:'आसानी से <span>वीडियो सेव करें।</span>',subtitle:'डाउनलोड की जाँच के लिए सीधे वीडियो का लिंक डालें।',placeholder:'वीडियो का सीधा लिंक डालें...',button:'लिंक जाँचें',message:'केवल अपने या अनुमति प्राप्त वीडियो डाउनलोड करें।',f1:'आसान और तेज़',d1:'हर स्क्रीन पर आसान उपयोग।',f2:'आपका डिवाइस',d2:'समर्थित वीडियो फ़ाइलें सेव करें।',f3:'निर्माताओं का सम्मान',d3:'केवल अनुमत सामग्री का उपयोग करें।',footer:'आसान वीडियो टूल्स'},
+es:{heading:'Descarga vídeos <span>fácilmente.</span>',subtitle:'Pega un enlace directo para comprobar si se puede descargar.',placeholder:'Pega la URL directa del vídeo...',button:'Comprobar enlace',message:'Descarga solo vídeos propios o autorizados.',f1:'Fácil y rápido',d1:'Una interfaz sencilla en cualquier pantalla.',f2:'Tu dispositivo',d2:'Guarda archivos de vídeo compatibles.',f3:'Respeta a los creadores',d3:'Usa contenido propio o autorizado.',footer:'Herramientas de vídeo sencillas'},
+fr:{heading:'Téléchargez des vidéos <span>facilement.</span>',subtitle:'Collez un lien vidéo direct pour vérifier sa disponibilité.',placeholder:'Collez l’URL directe de la vidéo...',button:'Vérifier le lien',message:'Téléchargez uniquement les vidéos autorisées.',f1:'Simple et rapide',d1:'Une interface facile sur tous les écrans.',f2:'Votre appareil',d2:'Enregistrez les vidéos compatibles.',f3:'Respect des créateurs',d3:'Utilisez du contenu autorisé.',footer:'Outils vidéo simples'}
+};
+const $=id=>document.getElementById(id);
+$('language').addEventListener('change',()=>{
+const t=translations[$('language').value];
+$('heading').innerHTML=t.heading;
+$('subtitle').textContent=t.subtitle;
+$('videoUrl').placeholder=t.placeholder;
+$('downloadButton').textContent=t.button;
+$('message').textContent=t.message;
+['feature1','feature2','feature3'].forEach((id,i)=>$(id).textContent=t['f'+(i+1)]);
+['desc1','desc2','desc3'].forEach((id,i)=>$(id).textContent=t['d'+(i+1)]);
+$('footerText').textContent=t.footer;
+document.documentElement.lang=$('language').value;
+});
+$('downloadForm').addEventListener('submit',e=>{
+e.preventDefault();
+let url;
+try{url=new URL($('videoUrl').value)}catch{
+$('message').textContent='Please enter a valid URL.';
+return;
+}
+if(url.protocol!=='https:'&&url.protocol!=='http:'){
+$('message').textContent='Please enter a valid web link.';
+return;
+}
+if(!/\.(mp4|webm|ogg|mov|m4v)(?:$|[?#])/i.test(url.pathname)){
+$('message').textContent='This link does not look like a direct video file. Platform page links may not be downloadable here.';
+return;
+}
+const a=document.createElement('a');
+a.href=url.href;
+a.download='';
+a.target='_blank';
+a.rel='noopener';
+document.body.appendChild(a);
+a.click();
+a.remove();
+$('message').textContent='Download requested. Your browser or the video host may control how the file is saved.';
+});
+</script>
+</body>
+</html>
